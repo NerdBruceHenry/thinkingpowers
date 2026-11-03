@@ -1,0 +1,26 @@
+// 成就徽章：check(s, ctx) 返回 true 即获得
+// ctx: { learned, practiced, domainsLearned: {id: n}, cardsTotal, games: {...} }
+export const BADGES = [
+  { id: 'first', icon: '🌟', name: '第一个超能力', desc: '解锁第一张思维卡', check: (s, c) => c.learned >= 1 },
+  { id: 'ten', icon: '🔟', name: '十全十美', desc: '解锁 10 张思维卡', check: (s, c) => c.learned >= 10 },
+  { id: 'fifty', icon: '🏅', name: '五十大关', desc: '解锁 50 张思维卡（集齐五本手册的数量！）', check: (s, c) => c.learned >= 50 },
+  { id: 'hundred', icon: '💯', name: '百宝箱', desc: '解锁 100 张思维卡', check: (s, c) => c.learned >= 100 },
+  { id: 'all', icon: '🌌', name: '思维宇宙', desc: '解锁全部思维卡', check: (s, c) => c.learned >= c.cardsTotal },
+  { id: 'doer', icon: '🛠️', name: '行动派', desc: '完成 5 次"试一试"实践并写下记录', check: (s, c) => c.practiced >= 5 },
+  { id: 'doer30', icon: '🏗️', name: '实践大师', desc: '完成 30 次实践记录', check: (s, c) => c.practiced >= 30 },
+  { id: 'streak3', icon: '🔥', name: '三天火苗', desc: '连续 3 天完成学习', check: (s) => (s.streak?.best || 0) >= 3 },
+  { id: 'streak7', icon: '🔥', name: '一周不断', desc: '连续 7 天完成学习', check: (s) => (s.streak?.best || 0) >= 7 },
+  { id: 'streak30', icon: '☄️', name: '月度坚持', desc: '连续 30 天完成学习', check: (s) => (s.streak?.best || 0) >= 30 },
+  { id: 'streak100', icon: '🌋', name: '百日之火', desc: '连续 100 天完成学习', check: (s) => (s.streak?.best || 0) >= 100 },
+  { id: 'explorer', icon: '🪐', name: '星际旅行家', desc: '在 6 个不同星球各解锁至少 1 张卡', check: (s, c) => Object.values(c.domainsLearned).filter((n) => n > 0).length >= 6 },
+  { id: 'universe', icon: '🌠', name: '十二星球', desc: '在全部 12 个星球都解锁至少 1 张卡', check: (s, c) => Object.values(c.domainsLearned).filter((n) => n > 0).length >= 12 },
+  { id: 'reviewer', icon: '🔁', name: '记忆守护者', desc: '复习答对 30 次', check: (s) => (s.stats?.reviewOk || 0) >= 30 },
+  { id: 'gamer', icon: '🎮', name: '游乐场常客', desc: '玩 10 局脑力游戏', check: (s) => (s.stats?.gamesPlayed || 0) >= 10 },
+  { id: 'allgames', icon: '🎡', name: '全能玩家', desc: '每种脑力游戏都玩过至少一次', check: (s, c) => c.gamesTried >= c.gamesTotal },
+  { id: 'fermi3', icon: '🧮', name: '估算高手', desc: '费米估算一局拿到 12 颗星以上', check: (s) => (s.games?.fermi?.best || 0) >= 12 },
+  { id: 'detective', icon: '🕵️', name: '谬误神探', desc: '谬误侦探一局全对', check: (s) => (s.games?.fallacy?.perfect || 0) >= 1 },
+  { id: 'calibrated', icon: '🎯', name: '精准自知', desc: '自信校准累计 40 题且 Brier 分数低于 0.2', check: (s, c) => c.calibN >= 40 && c.calibBrier !== null && c.calibBrier < 0.2 },
+  { id: 'talker', icon: '🗣️', name: '小小思想家', desc: '完成 10 次思辨时刻', check: (s) => (s.stats?.talks || 0) >= 10 },
+  { id: 'daily10', icon: '📅', name: '任务达人', desc: '完成 10 次每日任务', check: (s) => (s.stats?.dailyDone || 0) >= 10 },
+  { id: 'levelup', icon: '🚀', name: '升级啦', desc: '进入新的成长阶段', check: (s) => (s.profile?.level || 1) >= 2 && (s.stats?.levelUps || 0) >= 1 },
+];

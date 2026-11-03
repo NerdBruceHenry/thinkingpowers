@@ -1,0 +1,1 @@
+{"type":"module","private":true,"scripts":{"test":"node --test tests/*.test.mjs","build:sw":"node tools/gen-sw.mjs"}}
